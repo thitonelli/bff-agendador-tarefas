@@ -16,7 +16,6 @@ public class TarefasService {
 
     private final TarefasClient tarefasClient;
 
-
     public TarefasDTOResponse gravarTarefa(String token, TarefasDTORequest tarefasDTORequest) {
         return tarefasClient.gravarTarefa(tarefasDTORequest, token);
     }
@@ -33,8 +32,14 @@ public class TarefasService {
         tarefasClient.deletarTarefaPorId(id, token);
     }
 
-    public TarefasDTOResponse atualizarStatusNotificacao(String id, StatusNotificacaoEnum statusNotificacaoEnum, String token) {
-        return tarefasClient.atualizarStatusNotificacao(id, statusNotificacaoEnum, token);
+    // Sobrecarga sem token para uso interno/Cron
+    public TarefasDTOResponse atualizarStatusNotificacao(String id, StatusNotificacaoEnum status) {
+        return tarefasClient.atualizarStatusNotificacao(id, status);
+    }
+
+    // Mantida com token para endpoints que exigem contexto
+    public TarefasDTOResponse atualizarStatusNotificacao(String id, StatusNotificacaoEnum status, String token) {
+        return tarefasClient.atualizarStatusNotificacao(id, status, token);
     }
 
     public TarefasDTOResponse updateTarefas(String id, TarefasDTORequest tarefasDTORequest, String token) {
@@ -42,5 +47,3 @@ public class TarefasService {
     }
 
 }
-
-

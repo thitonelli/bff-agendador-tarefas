@@ -28,9 +28,18 @@ public interface TarefasClient {
     @DeleteMapping
     Void deletarTarefaPorId(@RequestParam String id, @RequestHeader("Authorization") String token);
 
+    // Método utilizado pela Cron (sem token e sem o header corrompido)
     @PatchMapping
-    TarefasDTOResponse atualizarStatusNotificacao(@RequestParam("id") String id, @RequestParam("status") StatusNotificacaoEnum status, @RequestHeader("Authorization") String token);
+    TarefasDTOResponse atualizarStatusNotificacao(
+            @RequestParam("id") String id,
+            @RequestParam("status") StatusNotificacaoEnum status);
 
+    // Método mantido com token (caso precise em outro lugar)
+    @PatchMapping
+    TarefasDTOResponse atualizarStatusNotificacao(
+            @RequestParam("id") String id,
+            @RequestParam("status") StatusNotificacaoEnum status,
+            @RequestHeader("Authorization") String token);
 
     @PutMapping
     TarefasDTOResponse atualizarTarefa(@RequestParam String id, @RequestBody TarefasDTORequest tarefasDTORequest, @RequestHeader("Authorization") String token);
